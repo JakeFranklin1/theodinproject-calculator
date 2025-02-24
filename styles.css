@@ -1,5 +1,15 @@
 html {
     background-color: rgb(37, 37, 37);
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    min-height: 100dvh;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
 }
 
 body {
@@ -7,6 +17,21 @@ body {
     max-width: 800px;
     margin: 0 auto;
     background-color: rgb(37, 37, 37);
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+main {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 48px;
+    width: 100%;
 }
 
 .calculator {
@@ -15,10 +40,11 @@ body {
     width: fit-content;
     height: fit-content;
     padding: 24px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: static;
+    transform: none;
+    top: auto;
+    left: auto;
+    margin: 0 auto;
 }
 
 .display {
@@ -133,4 +159,158 @@ button {
 .operand.active,
 .decimal.active {
     background-color: rgb(41, 41, 41);
+}
+
+footer {
+    color: white;
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-container p {
+    font-size: 20px;
+    margin: 0;
+}
+
+.footer-container a {
+    color: white;
+    text-decoration: none;
+}
+
+.fa-github {
+    font-size: 28px;
+    transition: all 0.5s ease;
+    padding-bottom: 4px;
+}
+
+.fa-github:hover {
+    transform: rotate(360deg) scale(1.2);
+    color: orange;
+}
+
+
+.keyboard-guide {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 24px;
+    border-radius: 12px;
+    color: white;
+    z-index: 9999;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.keyboard-guide h2 {
+    font-size: 24px;
+    margin: 0 0 16px 0;
+    text-align: center;
+}
+
+.keyboard-guide ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.keyboard-guide li {
+    margin-bottom: 12px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.keyboard-guide .key {
+    background-color: rgb(61, 61, 61);
+    padding: 4px 8px;
+    border-radius: 4px;
+    min-width: 32px;
+    text-align: center;
+    font-family: monospace;
+}
+
+/* Add to your existing media query */
+@media (max-width: 1150px) {
+    .keyboard-guide {
+        display: none;
+    }
+
+    main {
+        gap: 0;
+    }
+}
+
+@media (max-width: 468px) {
+    html,
+    body {
+        background-color: black;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        min-height: 100dvh;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100dvh;
+        max-width: none;
+    }
+
+    .calculator {
+        height: auto;
+        min-height: calc(100dvh - 80px);
+        width: 100%;
+        border-radius: 0;
+        position: relative;
+        padding: 16px;
+        top: 0;
+        left: 0;
+        transform: none;
+    }
+
+    .display {
+        padding-top: 1em;
+    }
+
+    .calculator-body {
+        padding-top: 1em;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        flex: 1;
+    }
+
+    button {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        border-radius: 50%;
+        font-size: 32px;
+    }
+
+    .calculator-body #zero {
+        grid-column: span 2;
+        width: 100%;
+        aspect-ratio: 2 / 1;
+        border-radius: 50px;
+        padding-left: 25px;
+    }
+
+    footer {
+        background-color: black;
+        z-index: 9999;
+        padding: 16px 0;
+        margin-top: 0;
+    }
 }

@@ -32,22 +32,54 @@ document.addEventListener('DOMContentLoaded', () => {
                     compute(Number(previousNumber), Number(currentNumber));
                     break;
                 case button.classList.contains("decimal"):
-                    handleDecimal(button)
+                    handleDecimal(button);
+                    break;
+                case button.classList.contains("sign"):
+                    handleSign();
+                    break;
+                case button.classList.contains("percent"):
+                    handlePercentage();
                     break;
             }
         });
     });
 
+    function formatDisplay(number) {
+        const maxLength = 11;
+        let formattedNumber = number.toString();
+
+        if (formattedNumber.length > maxLength) {
+            // Check if it's a decimal number
+            if (formattedNumber.includes('.')) {
+                // For decimal numbers, truncate with ellipsis
+                formattedNumber = formattedNumber.slice(0, maxLength - 1) + '…';
+            } else {
+                // For large integers, use exponential notation
+                formattedNumber = Number(number).toExponential(4); // 4 decimal places: 1.2345e+8
+            }
+        }
+
+        // Double check length after formatting
+        if (formattedNumber.length > maxLength) {
+            formattedNumber = formattedNumber.slice(0, maxLength - 1) + '…';
+        }
+
+        return formattedNumber;
+    }
+
     function handleNumber(button) {
+        // Don't allow more than 10 digits (to leave room for negative sign)
+        if (currentNumber.replace(/[.-]/g, '').length >= 10) {
+            return; // Don't add more digits
+        }
+
         if (currentNumber === '0') {
             currentNumber = button.value;
-        } else if (currentNumber !== '0' && currentNumber.length <= 10) {
-            currentNumber += button.value;
         } else {
-            console.log('max reached');
+            currentNumber += button.value;
         }
-        currentDisplay.textContent = currentNumber;
-        num1 = Number(currentNumber);
+
+        currentDisplay.textContent = formatDisplay(currentNumber);
     }
 
     function handleOperator(button) {
@@ -64,6 +96,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function handleSign() {
+        if (currentNumber === '' || currentNumber === '0') return;
+        currentNumber = (Number(currentNumber) * -1).toString();
+        currentDisplay.textContent = currentNumber;
+    }
+
+    function handlePercentage() {
+        if (currentNumber === '' || currentNumber === '0') return;
+        currentNumber = (Number(currentNumber) / 100).toString();
+        currentDisplay.textContent = currentNumber;
+    }
+
       function compute(num1, num2) {
         if (!previousNumber) {
             return;
@@ -74,6 +118,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 result = num1 * num2;
                 break;
             case '/':
+                if (num2 === 0) {
+                    handleZeroDivide();
+                    return;
+                }
                 result = num1 / num2;
                 break;
             case '+':
@@ -90,33 +138,36 @@ document.addEventListener('DOMContentLoaded', () => {
             result = parseFloat(result);
         }
 
-        currentDisplay.textContent = result.toString();
-        previousDisplay.textContent = `${num1} ${operator} ${num2}`;
+        console.log("Result: ", result)
+
+        currentDisplay.textContent = formatDisplay(result);
+        previousDisplay.textContent = `${formatDisplay(num1)} ${operator} ${formatDisplay(num2)}`;
         currentNumber = result.toString();
         previousNumber = '';
         operator = '';
         newCompute = true;
     }
 
-    function handleDecimal(button) {
+    function handleZeroDivide() {
+        currentDisplay.textContent = "lmao";
+        previousDisplay.textContent = "";
+        currentNumber = '0';
+        previousNumber = '';
+        operator = '';
+        newCompute = true;
+    }
 
+    function handleDecimal(button) {
         if (!currentNumber.includes('.')) {
-            if (currentNumber === '0') {
-                currentNumber = '0' + button.value;
-            } else if (currentNumber !== '0' && currentNumber.length <= 10) {
-                currentNumber += button.value;
-            } else {
-                console.log('max reached');
+            if (currentNumber === '') {
+                currentNumber = '0';
             }
+            currentNumber += '.';
             currentDisplay.textContent = currentNumber;
-            num1 = Number(currentNumber);
-        }
-        else {
+        } else {
             console.log("Already contains decimal.")
         }
     }
-
-
 
     function checkIfNew() {
         if (newCompute) {
@@ -135,20 +186,52 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("Cleared.")
     }
 
-    // Add keyboard support with visual feedback
     document.addEventListener('keydown', (event) => {
+        event.preventDefault();
+
+        // Number keys (0-9)
+        if (/^\d$/.test(event.key)) {
+            const button = document.querySelector(`button[value="${event.key}"]`);
+            if (button) button.click();
+        }
+
+        // Operators
+        switch (event.key) {
+            case '+':
+            case '-':
+            case '*':
+            case '/':
+                const operatorButton = document.querySelector(`button[value="${event.key}"]`);
+                if (operatorButton) operatorButton.click();
+                break;
+            case 'Enter':
+                const equalButton = document.querySelector('button.equal');
+                if (equalButton) equalButton.click();
+                break;
+            case '.':
+                const decimalButton = document.querySelector('button.decimal');
+                if (decimalButton) decimalButton.click();
+                break;
+            case 'Escape':
+                const clearButton = document.querySelector('button.clear');
+                if (clearButton) clearButton.click();
+                break;
+            case '%':
+                const percentButton = document.querySelector('button.percent');
+                if (percentButton) percentButton.click();
+                break;
+        }
+
+        // Add visual feedback
         const button = document.querySelector(`button[data-key="${event.keyCode}"]`);
         if (button) {
-            // Add active class to simulate press effect
             button.classList.add('active');
-            button.click();
         }
     });
 
     document.addEventListener('keyup', (event) => {
         const button = document.querySelector(`button[data-key="${event.keyCode}"]`);
         if (button) {
-            // Remove active class when key is released
             button.classList.remove('active');
         }
     });

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
@@ -19,7 +20,7 @@
             </div>
 
             <div class="calculator-body">
-                <button type="button" class="clear" value="clear" data-key="67">C</button>
+                <button type="button" class="clear" value="clear" data-key="27">C</button>
                 <button type="button" class="sign" value="sign" data-key="192">+/-</button>
                 <button type="button" class="percent" value="percent" data-key="80">%</button>
                 <button type="button" class="operator" value="/" data-key="68">/</button>
@@ -41,8 +42,31 @@
             </div>
         </div>
 
-    </main>
+        <div class="keyboard-guide">
+            <h2>Keyboard Shortcuts</h2>
+            <ul>
+                <li><span class="key">0-9</span> Numbers</li>
+                <li><span class="key">.</span> Decimal</li>
+                <li><span class="key">+</span> Add</li>
+                <li><span class="key">-</span> Subtract</li>
+                <li><span class="key">*</span> Multiply</li>
+                <li><span class="key">/</span> Divide</li>
+                <li><span class="key">Enter</span> Equal</li>
+                <li><span class="key">Esc</span> Clear</li>
+                <li><span class="key">%</span> Percent</li>
+                <li><span class="key">`</span> Toggle Sign</li>
+            </ul>
+        </div>
 
+    </main>
+    <footer>
+        <div class="footer-container">
+            <p class="copyright">Copyright &copy; Jake Franklin 2025</p>
+            <a href="https://github.com/JakeFranklin1" target="_blank" rel="noopener" title="Github">
+                <i class="fa-brands fa-github"></i>
+            </a>
+        </div>
+    </footer>
     <script src="script.js"></script>
 </body>
 
