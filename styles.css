@@ -1,0 +1,136 @@
+html {
+    background-color: rgb(37, 37, 37);
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: rgb(37, 37, 37);
+}
+
+.calculator {
+    background-color: black;
+    border-radius: 20px;
+    width: fit-content;
+    height: fit-content;
+    padding: 24px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+    height: 120px;
+    margin-bottom: 16px;
+}
+
+.display > div {
+    font-size: 64px;
+    text-align: right;
+    padding: 8px 0;
+    color: white;
+    min-height: 80px;
+}
+
+#previous-display {
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 300;
+    min-height: 40px;
+}
+
+.calculator-body {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+button {
+    font-size: 40px;
+    font-weight: 300;
+    text-align: center;
+    height: 90px;
+    width: 90px;
+    border-radius: 50px;
+    border: none;
+}
+
+.calculator-body #zero {
+    text-align: left;
+    padding-left: 32px;
+    grid-column: span 2;
+    width: 190px;
+}
+
+.operator,
+.equal {
+    background-color: orange;
+    color: white;
+}
+
+.clear,
+.sign,
+.percent {
+    background-color: rgb(171, 171, 171);
+}
+
+.operand,
+.decimal {
+    color: white;
+    background-color: rgb(61, 61, 61);
+}
+
+.operator:hover,
+.equal:hover {
+    background-color: rgb(255, 184, 52);
+    cursor: pointer;
+}
+
+.operator:active,
+.equal:active {
+    background-color: rgb(201, 126, 0);
+}
+
+.clear:hover,
+.sign:hover,
+.percent:hover {
+    background-color: rgb(201, 201, 201);
+    cursor: pointer;
+}
+
+.clear:active,
+.sign:active,
+.percent:active {
+    background-color: rgb(141, 141, 141);
+}
+
+.operand:hover,
+.decimal:hover {
+    background-color: rgb(81, 81, 81);
+    cursor: pointer;
+}
+
+.operand:active,
+.decimal:active {
+    background-color: rgb(41, 41, 41);
+}
+
+.operator.active,
+.equal.active {
+    background-color: rgb(201, 126, 0);
+}
+
+.clear.active,
+.sign.active,
+.percent.active {
+    background-color: rgb(141, 141, 141);
+}
+
+.operand.active,
+.decimal.active {
+    background-color: rgb(41, 41, 41);
+}
